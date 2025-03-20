@@ -1,4 +1,4 @@
-import styles from "./Homepage.module.css";
+import styles from "./Home.module.css";
 
 export default function Homepage() {
 	return (
