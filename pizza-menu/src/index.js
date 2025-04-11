@@ -6,4 +6,9 @@ function App() {
 }
 
 const root = ReactDom.createRoot(document.getElementById("root"));
-root.render(<App />);
+root.render(
+	// StrictMode: used in testing environment to render the app to check for bugs
+	<React.StrictMode>
+		<App />
+	</React.StrictMode>,
+);
