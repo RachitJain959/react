@@ -49,10 +49,9 @@ const pizzaData = [
 function App() {
 	return (
 		<div>
-			<h1>Hello!</h1>
-			<Pizza />
-			<Pizza />
-			<Pizza />
+			<Header />
+			<Menu />
+			<Footer />
 		</div>
 	);
 }
@@ -63,6 +62,27 @@ function Pizza() {
 			<img src="pizzas/prosciutto.jpg" alt="Pizza prosciutto" />
 			<h2>Pizza Prosciutto</h2>
 			<p>Tomato, mozarella, ham, aragula, and burrata cheese</p>
+		</div>
+	);
+}
+
+function Header() {
+	return <h1>Fast React Pizza Co.</h1>;
+}
+
+function Footer() {
+	return (
+		<footer>
+			{new Date().toLocaleTimeString()} We are currently open.
+		</footer>
+	);
+}
+function Menu() {
+	return (
+		<div>
+			<Pizza />
+			<Pizza />
+			<Pizza />
 		</div>
 	);
 }
