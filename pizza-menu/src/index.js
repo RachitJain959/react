@@ -70,21 +70,6 @@ function Pizza(props) {
 	);
 }
 
-function Header() {
-	return (
-		<header className="header">
-			<h1>Fast React Pizza Co.</h1>
-		</header>
-	);
-}
-
-function Footer() {
-	return (
-		<footer className="footer">
-			{new Date().toLocaleTimeString()} We are currently open.
-		</footer>
-	);
-}
 function Menu() {
 	return (
 		<main className="menu">
@@ -95,6 +80,37 @@ function Menu() {
 				))}
 			</ul>
 		</main>
+	);
+}
+
+function Header() {
+	return (
+		<header className="header">
+			<h1>Fast React Pizza Co.</h1>
+		</header>
+	);
+}
+
+function Footer() {
+	const currentHr = new Date().getHours();
+	const openHr = 0;
+	const closeHr = 3;
+	const isOpen = currentHr >= openHr && currentHr < closeHr;
+
+	return (
+		<footer className="footer">
+			{isOpen ? (
+				<div className="order">
+					<p>
+						{new Date().toLocaleTimeString()} We are currently open
+						till {closeHr}.
+					</p>
+					<button className="btn">Order</button>
+				</div>
+			) : (
+				<p>Sorry we are closed.</p>
+			)}
+		</footer>
 	);
 }
 
