@@ -57,16 +57,11 @@ function App() {
 	);
 }
 
-function Pizza(props) {
+function Header() {
 	return (
-		<li className="pizza">
-			<img src={props.pizzaObj.photoName} alt="Pizza prosciutto" />
-			<div>
-				<h3>{props.pizzaObj.name}</h3>
-				<p>{props.pizzaObj.ingredients}</p>
-				<span>{props.pizzaObj.price}</span>
-			</div>
-		</li>
+		<header className="header">
+			<h1>Fast React Pizza Co.</h1>
+		</header>
 	);
 }
 
@@ -90,11 +85,17 @@ function Menu() {
 	);
 }
 
-function Header() {
+function Pizza(props) {
+	if (props.pizzaObj.soldOut) return null;
 	return (
-		<header className="header">
-			<h1>Fast React Pizza Co.</h1>
-		</header>
+		<li className="pizza">
+			<img src={props.pizzaObj.photoName} alt="Pizza prosciutto" />
+			<div>
+				<h3>{props.pizzaObj.name}</h3>
+				<p>{props.pizzaObj.ingredients}</p>
+				<span>{props.pizzaObj.price}</span>
+			</div>
+		</li>
 	);
 }
 
