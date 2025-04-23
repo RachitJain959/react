@@ -71,14 +71,21 @@ function Pizza(props) {
 }
 
 function Menu() {
+	const pizzas = pizzaData;
+	const numPizza = pizzas.length;
+
 	return (
 		<main className="menu">
 			<h2>Our Menu</h2>
-			<ul className="pizzas">
-				{pizzaData.map((pizza) => (
-					<Pizza pizzaObj={pizza} />
-				))}
-			</ul>
+			{numPizza ? (
+				<ul className="pizzas">
+					{pizzas.map((pizza) => (
+						<Pizza pizzaObj={pizza} />
+					))}
+				</ul>
+			) : (
+				<p>We are working on our menu.</p>
+			)}
 		</main>
 	);
 }
@@ -93,8 +100,8 @@ function Header() {
 
 function Footer() {
 	const currentHr = new Date().getHours();
-	const openHr = 0;
-	const closeHr = 3;
+	const openHr = 12;
+	const closeHr = 22;
 	const isOpen = currentHr >= openHr && currentHr < closeHr;
 
 	return (
