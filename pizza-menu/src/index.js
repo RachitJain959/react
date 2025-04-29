@@ -72,10 +72,10 @@ function Menu() {
 	return (
 		<main className="menu">
 			<h2>Our Menu</h2>
-			{numPizza ? (
+			{numPizza > 0 ? (
 				<ul className="pizzas">
 					{pizzas.map((pizza) => (
-						<Pizza pizzaObj={pizza} />
+						<Pizza pizzaObj={pizza} key={pizza.name} />
 					))}
 				</ul>
 			) : (
@@ -86,14 +86,14 @@ function Menu() {
 }
 
 function Pizza({ pizzaObj }) {
-	if (pizzaObj.soldOut) return null;
+	// if (pizzaObj.soldOut) return null;
 	return (
-		<li className="pizza">
+		<li className={`pizza ${pizzaObj.soldOut && "sold-out"}`}>
 			<img src={pizzaObj.photoName} alt="Pizza prosciutto" />
 			<div>
 				<h3>{pizzaObj.name}</h3>
 				<p>{pizzaObj.ingredients}</p>
-				<span>{pizzaObj.price}</span>
+				<span>{pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price}</span>
 			</div>
 		</li>
 	);
