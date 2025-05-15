@@ -19,10 +19,21 @@ function Logo() {
 }
 
 function Form() {
+	function handleSubmit(e) {
+		e.preventDefault();
+	}
+
 	return (
-		<div className="add-form">
+		<form className="add-form" onSubmit={handleSubmit}>
 			<h3>What do you need for the trip?</h3>
-		</div>
+			<select>
+				{Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
+					<option>{num}</option>
+				))}
+			</select>
+			<input type="text" placeholder="Item..." />
+			<button>Add</button>
+		</form>
 	);
 }
 
@@ -51,7 +62,7 @@ function Item({ item }) {
 
 function Stats() {
 	return (
-		<footer className="footer">
+		<footer className="stats">
 			<em>
 				You have X items on your list, & you have already packed x%
 				items.
