@@ -23,3 +23,16 @@ function Bill() {
 		</div>
 	);
 }
+function Service({ children }) {
+	return (
+		<div>
+			<span>{children}</span>
+			<select>
+				<option>Dissatisfied(5%)</option>
+				<option>Okay(10%)</option>
+				<option>Good(15%)</option>
+				<option>AMazing!(20%)</option>
+			</select>
+		</div>
+	);
+}
