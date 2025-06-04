@@ -12,6 +12,7 @@ export default function App() {
 }
 function Bill() {
 	const [bill, setBill] = useState();
+	console.log(bill);
 	return (
 		<div>
 			<span>Bill Amount: </span>
@@ -24,14 +25,19 @@ function Bill() {
 	);
 }
 function Service({ children }) {
+	const [service, setService] = useState("good");
+	console.log(service);
 	return (
 		<div>
 			<span>{children}</span>
-			<select>
-				<option>Dissatisfied(5%)</option>
-				<option>Okay(10%)</option>
-				<option>Good(15%)</option>
-				<option>AMazing!(20%)</option>
+			<select
+				value={service}
+				onChange={(e) => setService(e.target.value)}
+			>
+				<option value="dissatisfied">Dissatisfied(0%)</option>
+				<option value="okay">Okay(5%)</option>
+				<option value="good">Good(10%)</option>
+				<option value="amazing">AMazing!(20%)</option>
 			</select>
 		</div>
 	);
