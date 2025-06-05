@@ -67,7 +67,7 @@ function Amount({ bill, avgTip }) {
 	const amount = bill + tip;
 	return (
 		<h1>
-			{bill}+{tip}={amount}
+			${bill}+{tip} tip=${amount}
 		</h1>
 	);
 }
