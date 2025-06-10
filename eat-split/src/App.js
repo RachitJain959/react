@@ -58,9 +58,13 @@ function Friend({ friend }) {
 					{friend.name} owes you {friend.balance}
 				</p>
 			)}
-			<button className="button">Select</button>
+			<Button>Select</Button>
 		</li>
 	);
+}
+
+function Button({ children }) {
+	return <button className="button">{children}</button>;
 }
 
 function FormAddFriend() {
@@ -72,7 +76,7 @@ function FormAddFriend() {
 			<label>Image URL</label>
 			<input type="text" />
 
-			<button className="button">Add</button>
+			<Button>Add</Button>
 		</form>
 	);
 }
