@@ -35,8 +35,11 @@ export default function App() {
 		setShowAddFriend(false);
 	}
 
-	function handleSelection(friend) {
-		setSelectedFriend(friend);
+	function handleSelection(curFriend) {
+		setSelectedFriend((friend) =>
+			curFriend.id === friend?.id ? null : curFriend,
+		);
+		setShowAddFriend(false);
 	}
 
 	return (
@@ -104,11 +107,28 @@ function Friend({ friend, onSelection, selectedFriend }) {
 	);
 }
 
-function Button({ children, onClick }) {
+function FormSplitBill({ selectedFriend }) {
 	return (
-		<button className="button" onClick={onClick}>
-			{children}
-		</button>
+		<form className="form-split-bill">
+			<h2>Split a bill with {selectedFriend.name}</h2>
+
+			<label>Bill Value: </label>
+			<input type="text" />
+
+			<label>Your Expence: </label>
+			<input type="text" />
+
+			<label>X's Expence: </label>
+			<input type="text" />
+
+			<label>Who is paying the bill? </label>
+			<select>
+				<option value="user">You</option>
+				<option value="friend">{selectedFriend.name}</option>
+			</select>
+
+			<Button>Split Bill</Button>
+		</form>
 	);
 }
 
@@ -156,27 +176,10 @@ function FormAddFriend({ onAddFriend }) {
 	);
 }
 
-function FormSplitBill({ selectedFriend }) {
+function Button({ children, onClick }) {
 	return (
-		<form className="form-split-bill">
-			<h2>Split a bill with {selectedFriend.name}</h2>
-
-			<label>Bill Value: </label>
-			<input type="text" />
-
-			<label>Your Expence: </label>
-			<input type="text" />
-
-			<label>X's Expence: </label>
-			<input type="text" />
-
-			<label>Who is paying the bill? </label>
-			<select>
-				<option value="user">You</option>
-				<option value="friend">{selectedFriend.name}</option>
-			</select>
-
-			<Button>Split Bill</Button>
-		</form>
+		<button className="button" onClick={onClick}>
+			{children}
+		</button>
 	);
 }
