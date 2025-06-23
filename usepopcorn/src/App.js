@@ -48,10 +48,7 @@ function NavBar() {
 
 	return (
 		<nav className="nav-bar">
-			<div className="logo">
-				<span role="img">🍿</span>
-				<h1>usePopcorn</h1>
-			</div>
+			<Logo />
 			<input
 				className="search"
 				type="text"
@@ -63,6 +60,15 @@ function NavBar() {
 				Found <strong>{movies.length}</strong> results
 			</p>
 		</nav>
+	);
+}
+
+function Logo() {
+	return (
+		<div className="logo">
+			<span role="img">🍿</span>
+			<h1>usePopcorn</h1>
+		</div>
 	);
 }
 
