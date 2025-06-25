@@ -49,10 +49,16 @@ function NavBar() {
 		<nav className="nav-bar">
 			<Logo />
 			<Search />
-			<p className="num-results">
-				Found <strong>{movies.length}</strong> results
-			</p>
+			<NumResults />
 		</nav>
+	);
+}
+
+function NumResults() {
+	return (
+		<p className="num-results">
+			Found <strong>X</strong> results
+		</p>
 	);
 }
 
