@@ -129,7 +129,7 @@ function Logo() {
 const average = (arr) =>
 	arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-function ListWatch() {
+function WatchBox() {
 	const [watched, setWatched] = useState(tempWatchedData);
 	const [isOpen2, setIsOpen2] = useState(true);
 
@@ -144,35 +144,37 @@ function ListWatch() {
 			{isOpen2 && (
 				<>
 					<WatchSummary watched={watched} />
-
-					<ul className="list">
-						{watched.map((movie) => (
-							<li key={movie.imdbID}>
-								<img
-									src={movie.Poster}
-									alt={`${movie.Title} poster`}
-								/>
-								<h3>{movie.Title}</h3>
-								<div>
-									<p>
-										<span>⭐️</span>
-										<span>{movie.imdbRating}</span>
-									</p>
-									<p>
-										<span>🌟</span>
-										<span>{movie.userRating}</span>
-									</p>
-									<p>
-										<span>⏳</span>
-										<span>{movie.runtime} min</span>
-									</p>
-								</div>
-							</li>
-						))}
-					</ul>
+					<WatchedList watched={watched} />
 				</>
 			)}
 		</div>
+	);
+}
+
+function WatchedList({ watched }) {
+	return (
+		<ul className="list">
+			{watched.map((movie) => (
+				<li key={movie.imdbID}>
+					<img src={movie.Poster} alt={`${movie.Title} poster`} />
+					<h3>{movie.Title}</h3>
+					<div>
+						<p>
+							<span>⭐️</span>
+							<span>{movie.imdbRating}</span>
+						</p>
+						<p>
+							<span>🌟</span>
+							<span>{movie.userRating}</span>
+						</p>
+						<p>
+							<span>⏳</span>
+							<span>{movie.runtime} min</span>
+						</p>
+					</div>
+				</li>
+			))}
+		</ul>
 	);
 }
 
@@ -213,7 +215,7 @@ export default function App() {
 
 			<main className="main">
 				<ListBox />
-				<ListWatch />
+				<WatchBox />
 			</main>
 		</>
 	);
