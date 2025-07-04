@@ -42,6 +42,15 @@ const tempWatchedData = [
 	},
 ];
 
+export default function App() {
+	return (
+		<>
+			<NavBar />
+			<Main />
+		</>
+	);
+}
+
 function NavBar() {
 	return (
 		<nav className="nav-bar">
@@ -52,11 +61,12 @@ function NavBar() {
 	);
 }
 
-function NumResults() {
+function Logo() {
 	return (
-		<p className="num-results">
-			Found <strong>X</strong> results
-		</p>
+		<div className="logo">
+			<span role="img">🍿</span>
+			<h1>usePopcorn</h1>
+		</div>
 	);
 }
 
@@ -71,6 +81,23 @@ function Search() {
 			value={query}
 			onChange={(e) => setQuery(e.target.value)}
 		/>
+	);
+}
+
+function NumResults() {
+	return (
+		<p className="num-results">
+			Found <strong>X</strong> results
+		</p>
+	);
+}
+
+function Main() {
+	return (
+		<main className="main">
+			<ListBox />
+			<WatchBox />
+		</main>
 	);
 }
 
@@ -117,15 +144,6 @@ function Movie({ movie }) {
 	);
 }
 
-function Logo() {
-	return (
-		<div className="logo">
-			<span role="img">🍿</span>
-			<h1>usePopcorn</h1>
-		</div>
-	);
-}
-
 const average = (arr) =>
 	arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
@@ -144,43 +162,10 @@ function WatchBox() {
 			{isOpen2 && (
 				<>
 					<WatchSummary watched={watched} />
-					<WatchedList watched={watched} />
+					<WatchedMovieList watched={watched} />
 				</>
 			)}
 		</div>
-	);
-}
-
-function WatchedList({ watched }) {
-	return (
-		<ul className="list">
-			{watched.map((movie) => (
-				<WatchedMovie movie={movie} key={movie.imdbID} />
-			))}
-		</ul>
-	);
-}
-
-function WatchedMovie({ movie }) {
-	return (
-		<li>
-			<img src={movie.Poster} alt={`${movie.Title} poster`} />
-			<h3>{movie.Title}</h3>
-			<div>
-				<p>
-					<span>⭐️</span>
-					<span>{movie.imdbRating}</span>
-				</p>
-				<p>
-					<span>🌟</span>
-					<span>{movie.userRating}</span>
-				</p>
-				<p>
-					<span>⏳</span>
-					<span>{movie.runtime} min</span>
-				</p>
-			</div>
-		</li>
 	);
 }
 
@@ -214,15 +199,35 @@ function WatchSummary({ watched }) {
 	);
 }
 
-export default function App() {
+function WatchedMovieList({ watched }) {
 	return (
-		<>
-			<NavBar />
+		<ul className="list">
+			{watched.map((movie) => (
+				<WatchedMovie movie={movie} key={movie.imdbID} />
+			))}
+		</ul>
+	);
+}
 
-			<main className="main">
-				<ListBox />
-				<WatchBox />
-			</main>
-		</>
+function WatchedMovie({ movie }) {
+	return (
+		<li>
+			<img src={movie.Poster} alt={`${movie.Title} poster`} />
+			<h3>{movie.Title}</h3>
+			<div>
+				<p>
+					<span>⭐️</span>
+					<span>{movie.imdbRating}</span>
+				</p>
+				<p>
+					<span>🌟</span>
+					<span>{movie.userRating}</span>
+				</p>
+				<p>
+					<span>⏳</span>
+					<span>{movie.runtime} min</span>
+				</p>
+			</div>
+		</li>
 	);
 }
