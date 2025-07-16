@@ -14,20 +14,28 @@ export default function StarRating({
 	maxRating = 5,
 	color = "#fcc419",
 	size = 48,
+	className = "",
+	defaultRating = 0,
+	onSetRating = () => {},
 }) {
-	const [rating, setRating] = useState(0);
+	const [rating, setRating] = useState(defaultRating);
 	const [hoverRating, setHoverRating] = useState(0);
 
 	const textStyle = {
 		lineHeight: "1",
 		margin: "0",
 		color,
-		size: `${size / 1.5}`,
+		fontSize: `${size / 1.5}px`,
 	};
+
+	function handleRating(rating) {
+		setRating(rating);
+		onSetRating(rating);
+	}
 
 	return (
 		<div style={containerStyle}>
-			<div style={starContainerStyle}>
+			<div style={starContainerStyle} className={className}>
 				{Array.from({ length: maxRating }, (_, i) => (
 					<span key={i}>
 						<Star
@@ -36,7 +44,7 @@ export default function StarRating({
 									? i + 1 <= hoverRating
 									: i + 1 <= rating
 							}
-							onRate={() => setRating(i + 1)}
+							onRate={() => handleRating(i + 1)}
 							onHoverIn={() => setHoverRating(i + 1)}
 							onHoverOut={() => setHoverRating(0)}
 							color={color}
