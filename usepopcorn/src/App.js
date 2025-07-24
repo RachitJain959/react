@@ -46,12 +46,16 @@ export default function App() {
 	const [movies, setMovies] = useState(tempMovieData);
 	const [watched, setWatched] = useState(tempWatchedData);
 
+	// using another function before async in useEffect as async returns a promise which will result in a race condition in useEffect
 	useEffect(function () {
-		fetch(
-			`https://www.omdbapi.com/?apikey=${process.env.REACT_APP_KEY}&s=interstellar`,
-		)
-			.then((res) => res.json())
-			.then((data) => console.log(setMovies(data.Search)));
+		async function fetchMovies() {
+			const res = await fetch(
+				`https://www.omdbapi.com/?apikey=${process.env.REACT_APP_KEY}&s=interstellar`,
+			);
+			const data = await res.json();
+			setMovies(data.Search);
+		}
+		fetchMovies();
 	}, []);
 
 	return (
