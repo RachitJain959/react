@@ -45,15 +45,18 @@ const tempWatchedData = [
 export default function App() {
 	const [movies, setMovies] = useState(tempMovieData);
 	const [watched, setWatched] = useState(tempWatchedData);
+	const [isLoading, setIsLoading] = useState(false);
 
 	// using another function before async in useEffect as async returns a promise which will result in a race condition in useEffect
 	useEffect(function () {
 		async function fetchMovies() {
+			setIsLoading(true);
 			const res = await fetch(
 				`https://www.omdbapi.com/?apikey=${process.env.REACT_APP_KEY}&s=interstellar`,
 			);
 			const data = await res.json();
 			setMovies(data.Search);
+			setIsLoading(false);
 		}
 		fetchMovies();
 	}, []);
@@ -67,7 +70,7 @@ export default function App() {
 			</NavBar>
 			<Main>
 				<Box>
-					<ListMovies movies={movies} />
+					{isLoading ? <Loader /> : <ListMovies movies={movies} />}
 				</Box>
 
 				<Box>
@@ -79,6 +82,10 @@ export default function App() {
 			</Main>
 		</>
 	);
+}
+
+function Loader() {
+	return <p className="loader">Loading...</p>;
 }
 
 function NavBar({ children }) {
