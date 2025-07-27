@@ -46,17 +46,26 @@ export default function App() {
 	const [movies, setMovies] = useState(tempMovieData);
 	const [watched, setWatched] = useState(tempWatchedData);
 	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState("");
 
 	// using another function before async in useEffect as async returns a promise which will result in a race condition in useEffect
 	useEffect(function () {
 		async function fetchMovies() {
-			setIsLoading(true);
-			const res = await fetch(
-				`https://www.omdbapi.com/?apikey=${process.env.REACT_APP_KEY}&s=interstellar`,
-			);
-			const data = await res.json();
-			setMovies(data.Search);
-			setIsLoading(false);
+			try {
+				setIsLoading(true);
+				const res = await fetch(
+					`https://www.omdbapi.com/?apikey=${process.env.REACT_APP_KEY}&s=interstellar`,
+				);
+
+				if (!res.ok) throw new Error("Something went wrong");
+				const data = await res.json();
+				setMovies(data.Search);
+			} catch (err) {
+				console.error(err.message);
+				setError(err.message);
+			} finally {
+				setIsLoading(false);
+			}
 		}
 		fetchMovies();
 	}, []);
@@ -70,7 +79,10 @@ export default function App() {
 			</NavBar>
 			<Main>
 				<Box>
-					{isLoading ? <Loader /> : <ListMovies movies={movies} />}
+					{/* {isLoading ? <Loader /> : <ListMovies movies={movies} />} */}
+					{isLoading && <Loader />}
+					{!isLoading && !error && <ListMovies movies={movies} />}
+					{error && <ErrorMessage message={error} />}
 				</Box>
 
 				<Box>
@@ -81,6 +93,14 @@ export default function App() {
 				</Box>
 			</Main>
 		</>
+	);
+}
+
+function ErrorMessage({ message }) {
+	return (
+		<p className="error">
+			<span>❌</span> {message}
+		</p>
 	);
 }
 
