@@ -48,17 +48,26 @@ export default function App() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
 
+	const query = "asfdgdth";
+
 	// using another function before async in useEffect as async returns a promise which will result in a race condition in useEffect
 	useEffect(function () {
 		async function fetchMovies() {
 			try {
 				setIsLoading(true);
 				const res = await fetch(
-					`https://www.omdbapi.com/?apikey=${process.env.REACT_APP_KEY}&s=interstellar`,
+					`https://www.omdbapi.com/?apikey=${process.env.REACT_APP_KEY}&s=${query}`,
 				);
 
+				// offline error
 				if (!res.ok) throw new Error("Something went wrong");
+
 				const data = await res.json();
+
+				// search error
+				if (data.Response === "False")
+					throw new Error("Movie not found!");
+
 				setMovies(data.Search);
 			} catch (err) {
 				console.error(err.message);
