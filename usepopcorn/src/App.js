@@ -43,47 +43,52 @@ const tempWatchedData = [
 ];
 
 export default function App() {
+	const [query, setQuery] = useState("");
+
 	const [movies, setMovies] = useState(tempMovieData);
 	const [watched, setWatched] = useState(tempWatchedData);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
 
-	const query = "asfdgdth";
-
 	// using another function before async in useEffect as async returns a promise which will result in a race condition in useEffect
-	useEffect(function () {
-		async function fetchMovies() {
-			try {
-				setIsLoading(true);
-				const res = await fetch(
-					`https://www.omdbapi.com/?apikey=${process.env.REACT_APP_KEY}&s=${query}`,
-				);
+	useEffect(
+		function () {
+			async function fetchMovies() {
+				try {
+					setIsLoading(true);
+					setError(""); // resetting error before every render to clear last error
 
-				// offline error
-				if (!res.ok) throw new Error("Something went wrong");
+					const res = await fetch(
+						`https://www.omdbapi.com/?apikey=${process.env.REACT_APP_KEY}&s=${query}`,
+					);
 
-				const data = await res.json();
+					// offline error
+					if (!res.ok) throw new Error("Something went wrong");
 
-				// search error
-				if (data.Response === "False")
-					throw new Error("Movie not found!");
+					const data = await res.json();
 
-				setMovies(data.Search);
-			} catch (err) {
-				console.error(err.message);
-				setError(err.message);
-			} finally {
-				setIsLoading(false);
+					// search error
+					if (data.Response === "False")
+						throw new Error("Movie not found!");
+
+					setMovies(data.Search);
+				} catch (err) {
+					console.error(err.message);
+					setError(err.message);
+				} finally {
+					setIsLoading(false);
+				}
 			}
-		}
-		fetchMovies();
-	}, []);
+			fetchMovies();
+		},
+		[query],
+	);
 
 	return (
 		<>
 			<NavBar>
 				<Logo />
-				<Search />
+				<Search query={query} setQuery={setQuery} />
 				<NumResults movies={movies} />
 			</NavBar>
 			<Main>
@@ -130,9 +135,7 @@ function Logo() {
 	);
 }
 
-function Search() {
-	const [query, setQuery] = useState("");
-
+function Search({ query, setQuery }) {
 	return (
 		<input
 			className="search"
