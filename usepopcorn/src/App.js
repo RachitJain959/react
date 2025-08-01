@@ -112,7 +112,10 @@ export default function App() {
 
 				<Box>
 					{selectedId ? (
-						<MovieDetails selectedId={selectedId} />
+						<MovieDetails
+							selectedId={selectedId}
+							setSelectedId={setSelectedId}
+						/>
 					) : (
 						<>
 							<WatchSummary watched={watched} />
@@ -247,8 +250,18 @@ function Movie({ movie, setSelectedId }) {
 const average = (arr) =>
 	arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-function MovieDetails({ selectedId }) {
-	return <div className="details">{selectedId} </div>;
+function MovieDetails({ selectedId, setSelectedId }) {
+	function handleCloseMovie() {
+		setSelectedId(null);
+	}
+	return (
+		<div className="details">
+			<button className="btn-back" onClick={handleCloseMovie}>
+				&larr;{" "}
+			</button>
+			{selectedId}{" "}
+		</div>
+	);
 }
 
 function WatchSummary({ watched }) {
