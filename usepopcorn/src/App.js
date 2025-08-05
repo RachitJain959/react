@@ -259,6 +259,7 @@ const average = (arr) =>
 function MovieDetails({ selectedId, setSelectedId, onAddWatched }) {
 	const [movie, setMovie] = useState({});
 	const [isLoading, setIsLoading] = useState(false);
+	const [userRating, setUserRating] = useState("");
 
 	const {
 		Title: title,
@@ -285,8 +286,10 @@ function MovieDetails({ selectedId, setSelectedId, onAddWatched }) {
 			poster,
 			imdbRating: Number(imdbRating),
 			runtime: Number(runtime.split(" ").at(0)),
+			userRating,
 		};
 		onAddWatched(newWatchedMovie);
+		handleCloseMovie();
 	}
 
 	useEffect(
@@ -320,7 +323,7 @@ function MovieDetails({ selectedId, setSelectedId, onAddWatched }) {
 						<div className="details-overview">
 							<h2>{title} </h2>
 							<p>
-								{released} &bull; {runtime}{" "}
+								{released} &bull; {runtime}
 							</p>
 							<p>{genre} </p>
 							<p>
@@ -331,11 +334,17 @@ function MovieDetails({ selectedId, setSelectedId, onAddWatched }) {
 					</header>
 					<section>
 						<div className="rating">
-							<StarRating maxRating={10} size={24} />
+							<StarRating
+								maxRating={10}
+								size={24}
+								onSetRating={setUserRating}
+							/>
 						</div>
-						<button className="btn-add" onClick={handleAdd}>
-							+ Add to the list
-						</button>
+						{userRating > 0 && (
+							<button className="btn-add" onClick={handleAdd}>
+								+ Add to the list
+							</button>
+						)}
 
 						<em>{plot} </em>
 						<p>Starring {actors}</p>
