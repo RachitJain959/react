@@ -269,6 +269,11 @@ function MovieDetails({ selectedId, setSelectedId, onAddWatched, watched }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [userRating, setUserRating] = useState("");
 
+	const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
+	const watchedUserRating = watched.find(
+		(movie) => movie.imdbID === selectedId,
+	)?.userRating;
+
 	const {
 		Title: title,
 		Year: year,
@@ -342,12 +347,10 @@ function MovieDetails({ selectedId, setSelectedId, onAddWatched, watched }) {
 					</header>
 					<section>
 						<div className="rating">
-							{watched
-								.map((movie) => movie.imdbID)
-								.includes(selectedId) ? (
+							{isWatched ? (
 								<p>
-									You have rated this movie {movie.userRating}
-									⭐
+									You have rated this movie{" "}
+									{watchedUserRating} ⭐
 								</p>
 							) : (
 								<StarRating
