@@ -44,7 +44,7 @@ import StarRating from "./StarRating";
 // ];
 
 export default function App() {
-	const [query, setQuery] = useState("inception");
+	const [query, setQuery] = useState("");
 
 	const [movies, setMovies] = useState([]);
 	const [watched, setWatched] = useState([]);
@@ -63,6 +63,9 @@ export default function App() {
 	// using another function before async in useEffect as async returns a promise which will result in a race condition in useEffect
 	useEffect(
 		function () {
+			// AbortController: browser function to stop race conditions, nothing to do with react
+			const controller = new AbortController();
+
 			async function fetchMovies() {
 				try {
 					setIsLoading(true);
@@ -70,6 +73,7 @@ export default function App() {
 
 					const res = await fetch(
 						`https://www.omdbapi.com/?apikey=${process.env.REACT_APP_KEY}&s=${query}`,
+						{ signal: controller.signal }, // we have to connect controller with the fetch to signal when & where to activate controller
 					);
 
 					// offline error
@@ -82,9 +86,12 @@ export default function App() {
 						throw new Error("Movie not found!");
 
 					setMovies(data.Search);
+					setError("");
 				} catch (err) {
 					console.error(err.message);
-					setError(err.message);
+
+					// Every cancelled request is treated as an error in JS, so every cancelled fetch will go in the catch block
+					if (err.name !== "AbortError") setError(err.message);
 				} finally {
 					setIsLoading(false);
 				}
@@ -95,6 +102,12 @@ export default function App() {
 				return;
 			}
 			fetchMovies();
+
+			// Cleanup func: after every keystroke, effect will be re-rendered & this cleanup func will return. So, after every re-render (every keystroke), controller will abort the current request.
+
+			return function () {
+				controller.abort();
+			};
 		},
 		[query],
 	);
