@@ -47,10 +47,16 @@ export default function App() {
 	const [query, setQuery] = useState("");
 
 	const [movies, setMovies] = useState([]);
-	const [watched, setWatched] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
 	const [selectedId, setSelectedId] = useState(null);
+
+	// const [watched, setWatched] = useState([]);
+
+	const [watched, setWatched] = useState(function () {
+		const storedValue = localStorage.getItem("watched");
+		return JSON.parse(storedValue);
+	});
 
 	function handleCloseMovie() {
 		setSelectedId(null);
@@ -63,6 +69,13 @@ export default function App() {
 	function handleDeleteWatched(id) {
 		setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
 	}
+
+	useEffect(
+		function () {
+			localStorage.setItem("watched", JSON.stringify(watched));
+		},
+		[watched],
+	);
 
 	// using another function before async in useEffect as async returns a promise which will result in a race condition in useEffect
 	useEffect(
@@ -92,10 +105,12 @@ export default function App() {
 					setMovies(data.Search);
 					setError("");
 				} catch (err) {
-					console.error(err.message);
+					if (err.name !== "AbortError") {
+						console.error(err.message);
+						setError(err.message);
+					}
 
 					// Every cancelled request is treated as an error in JS, so every cancelled fetch will go in the catch block
-					if (err.name !== "AbortError") setError(err.message);
 				} finally {
 					setIsLoading(false);
 				}
