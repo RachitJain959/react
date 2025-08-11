@@ -52,6 +52,10 @@ export default function App() {
 	const [error, setError] = useState("");
 	const [selectedId, setSelectedId] = useState(null);
 
+	function handleCloseMovie() {
+		setSelectedId(null);
+	}
+
 	function handleAddWatched(movie) {
 		setWatched((watched) => [...watched, movie]);
 	}
@@ -138,6 +142,7 @@ export default function App() {
 							selectedId={selectedId}
 							setSelectedId={setSelectedId}
 							onAddWatched={handleAddWatched}
+							onCloseMovie={handleCloseMovie}
 							watched={watched}
 						/>
 					) : (
@@ -277,7 +282,7 @@ function Movie({ movie, setSelectedId }) {
 const average = (arr) =>
 	arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-function MovieDetails({ selectedId, setSelectedId, onAddWatched, watched }) {
+function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
 	const [movie, setMovie] = useState({});
 	const [isLoading, setIsLoading] = useState(false);
 	const [userRating, setUserRating] = useState("");
@@ -300,10 +305,6 @@ function MovieDetails({ selectedId, setSelectedId, onAddWatched, watched }) {
 		Director: director,
 	} = movie;
 
-	function handleCloseMovie() {
-		setSelectedId(null);
-	}
-
 	function handleAdd() {
 		const newWatchedMovie = {
 			imdbID: selectedId,
@@ -315,8 +316,25 @@ function MovieDetails({ selectedId, setSelectedId, onAddWatched, watched }) {
 			userRating,
 		};
 		onAddWatched(newWatchedMovie);
-		handleCloseMovie();
+		onCloseMovie();
 	}
+
+	useEffect(
+		function () {
+			function callback(e) {
+				if (e.code === "Escape") {
+					onCloseMovie();
+				}
+			}
+
+			document.addEventListener("keydown", callback);
+
+			return function () {
+				document.removeEventListener("keydown", callback);
+			};
+		},
+		[onCloseMovie],
+	);
 
 	useEffect(
 		function () {
@@ -354,7 +372,7 @@ function MovieDetails({ selectedId, setSelectedId, onAddWatched, watched }) {
 			) : (
 				<>
 					<header>
-						<button className="btn-back" onClick={handleCloseMovie}>
+						<button className="btn-back" onClick={onCloseMovie}>
 							&larr;
 						</button>
 						<img src={poster} alt={`Poster of ${movie} movie`} />
