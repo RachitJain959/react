@@ -140,28 +140,10 @@ function Logo() {
 function Search({ query, setQuery }) {
 	const inputEl = useRef(null);
 
-	// Enter keypress will focus on search bar
-
 	useKey("Enter", function () {
 		inputEl.current.focus();
 		setQuery("");
 	});
-
-	// useEffect(
-	// 	function () {
-	// 		function callback(e) {
-	// 			if (e.code === "Enter") {
-	// 				inputEl.current.focus();
-	// 				setQuery("");
-	// 			}
-	// 		}
-
-	// 		document.addEventListener("keydown", callback);
-
-	// 		return () => document.removeEventListener("keydown", callback);
-	// 	},
-	// 	[setQuery],
-	// );
 
 	return (
 		<input
