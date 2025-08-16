@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 export function useLocalStorageState(initialState, key) {
 	const [value, setValue] = useState(function () {
 		const storedValue = localStorage.getItem(key);
-		return JSON.parse(storedValue);
+
+		// storedValue might be null on initial run. map function will not work on null.
+		return storedValue ? JSON.parse(storedValue) : initialState;
 	});
 
 	useEffect(

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 import { useMovies } from "./useMovies";
 import { useLocalStorageState } from "./useLocalStorageState";
+import { useKey } from "./useKey";
 
 // const tempMovieData = [
 // 	{
@@ -140,21 +141,27 @@ function Search({ query, setQuery }) {
 	const inputEl = useRef(null);
 
 	// Enter keypress will focus on search bar
-	useEffect(
-		function () {
-			function callback(e) {
-				if (e.code === "Enter") {
-					inputEl.current.focus();
-					setQuery("");
-				}
-			}
 
-			document.addEventListener("keydown", callback);
+	useKey("Enter", function () {
+		inputEl.current.focus();
+		setQuery("");
+	});
 
-			return () => document.removeEventListener("keydown", callback);
-		},
-		[setQuery],
-	);
+	// useEffect(
+	// 	function () {
+	// 		function callback(e) {
+	// 			if (e.code === "Enter") {
+	// 				inputEl.current.focus();
+	// 				setQuery("");
+	// 			}
+	// 		}
+
+	// 		document.addEventListener("keydown", callback);
+
+	// 		return () => document.removeEventListener("keydown", callback);
+	// 	},
+	// 	[setQuery],
+	// );
 
 	return (
 		<input
@@ -290,22 +297,24 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
 		onCloseMovie();
 	}
 
-	useEffect(
-		function () {
-			function callback(e) {
-				if (e.code === "Escape") {
-					onCloseMovie();
-				}
-			}
+	useKey("Escape", onCloseMovie);
 
-			document.addEventListener("keydown", callback);
+	// useEffect(
+	// 	function () {
+	// 		function callback(e) {
+	// 			if (e.code === "Escape") {
+	// 				onCloseMovie();
+	// 			}
+	// 		}
 
-			return function () {
-				document.removeEventListener("keydown", callback);
-			};
-		},
-		[onCloseMovie],
-	);
+	// 		document.addEventListener("keydown", callback);
+
+	// 		return function () {
+	// 			document.removeEventListener("keydown", callback);
+	// 		};
+	// 	},
+	// 	[onCloseMovie],
+	// );
 
 	useEffect(
 		function () {
