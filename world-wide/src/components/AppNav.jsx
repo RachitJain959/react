@@ -9,7 +9,7 @@ function AppNav() {
 					<NavLink to="cities">Cities</NavLink>
 				</li>
 				<li>
-					<NavLink to="countires">Countries</NavLink>
+					<NavLink to="countries">Countries</NavLink>
 				</li>
 			</ul>
 		</div>
