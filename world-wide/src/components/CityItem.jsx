@@ -1,5 +1,5 @@
-function CityItem() {
-	return <div></div>;
+function CityItem({ city }) {
+	return <li>city</li>;
 }
 
 export default CityItem;
