@@ -6,15 +6,12 @@ import AppLayout from "./pages/AppLayout";
 import PageNotFound from "./pages/PageNotFound";
 import Login from "./pages/Login";
 import CityList from "./components/CityList";
-import { useEffect, useState } from "react";
 import CountryList from "./components/CountryList";
 import City from "./components/City";
 import Form from "./components/Form";
 import { CitiesProvider } from "./contexts/CitiesContext";
 
 function App() {
-	// const { cities, isLoading } = useCities();
-
 	return (
 		<CitiesProvider>
 			<BrowserRouter>

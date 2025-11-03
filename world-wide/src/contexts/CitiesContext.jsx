@@ -37,10 +37,11 @@ function CitiesProvider({ children }) {
 	);
 }
 
-// function useCities() {
-// 	const context = useContext(CitiesContext);
+function useCities() {
+	const context = useContext(CitiesContext);
 
-// 	return context;
-// }
+	return context;
+}
 
-export { CitiesProvider };
+// eslint-disable-next-line react-refresh/only-export-components
+export { CitiesProvider, useCities };
