@@ -32,7 +32,22 @@ function Form() {
 	const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
 	const [geoCodingError, setGeocodingError] = useState("");
 
-	function handleSubmit(e) {}
+	function handleSubmit(e) {
+		e.preventDefault();
+
+		if (!date || !cityName) return;
+
+		const newCity = {
+			cityName,
+			country,
+			emoji,
+			date,
+			notes,
+			position: { lat, lng },
+		};
+
+		console.log(newCity);
+	}
 
 	useEffect(
 		function () {
@@ -43,7 +58,6 @@ function Form() {
 						`${BASE_URL}?latitude=${lat}&longitude=${lng}`,
 					);
 					const data = await res.json();
-					console.log(data);
 
 					if (!data.countryCode)
 						throw new Error(
