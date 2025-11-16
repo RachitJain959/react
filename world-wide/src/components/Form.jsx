@@ -10,6 +10,7 @@ import ButtonBack from "./ButtonBack";
 import { useUrlPosition } from "../hooks/useUrlPosition";
 import Spinner from "./Spinner";
 import Message from "./Message";
+import { useCities } from "../contexts/CitiesContext";
 
 const BASE_URL = "https://api.bigdatacloud.net/data/reverse-geocode-client";
 
@@ -27,6 +28,8 @@ function Form() {
 	const [date, setDate] = useState(new Date());
 	const [notes, setNotes] = useState("");
 	const [emoji, setEmoji] = useState();
+
+	const { createCity } = useCities();
 
 	const [lat, lng] = useUrlPosition();
 	const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
@@ -46,7 +49,7 @@ function Form() {
 			position: { lat, lng },
 		};
 
-		console.log(newCity);
+		createCity(newCity);
 	}
 
 	useEffect(

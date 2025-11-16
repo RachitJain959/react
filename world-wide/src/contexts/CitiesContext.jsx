@@ -42,6 +42,27 @@ function CitiesProvider({ children }) {
 		}
 	}
 
+	async function createCity(newCity) {
+		try {
+			setIsLoading(true);
+
+			const res = await fetch(`${import.meta.env.VITE_BASE_URL}/cities`, {
+				method: "POST",
+				body: JSON.stringify(newCity),
+				headers: {
+					"Content-type": "appilication/json",
+				},
+			});
+			const data = await res.json();
+
+			console.log(data);
+		} catch (err) {
+			alert(err);
+		} finally {
+			setIsLoading(false);
+		}
+	}
+
 	return (
 		<CitiesContext.Provider
 			value={{
@@ -49,6 +70,7 @@ function CitiesProvider({ children }) {
 				isLoading,
 				currentCity,
 				getCity,
+				createCity,
 			}}
 		>
 			{children}
