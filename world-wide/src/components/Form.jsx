@@ -29,7 +29,7 @@ function Form() {
 	const [notes, setNotes] = useState("");
 	const [emoji, setEmoji] = useState();
 
-	const { createCity } = useCities();
+	const { createCity, isLoading: isLoadingCity } = useCities();
 
 	const [lat, lng] = useUrlPosition();
 	const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
@@ -92,7 +92,10 @@ function Form() {
 	if (geoCodingError) return <Message message={geoCodingError} />;
 
 	return (
-		<form className={styles.form} onSubmit={handleSubmit}>
+		<form
+			className={`${styles.form} ${isLoadingCity ? styles.loading : ""}`}
+			onSubmit={handleSubmit}
+		>
 			<div className={styles.row}>
 				<label htmlFor="cityName">City name</label>
 				<input
