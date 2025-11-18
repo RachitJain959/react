@@ -11,6 +11,7 @@ import { useUrlPosition } from "../hooks/useUrlPosition";
 import Spinner from "./Spinner";
 import Message from "./Message";
 import { useCities } from "../contexts/CitiesContext";
+import { useNavigate } from "react-router-dom";
 
 const BASE_URL = "https://api.bigdatacloud.net/data/reverse-geocode-client";
 
@@ -31,11 +32,13 @@ function Form() {
 
 	const { createCity, isLoading: isLoadingCity } = useCities();
 
+	const navigate = useNavigate();
+
 	const [lat, lng] = useUrlPosition();
 	const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
 	const [geoCodingError, setGeocodingError] = useState("");
 
-	function handleSubmit(e) {
+	async function handleSubmit(e) {
 		e.preventDefault();
 
 		if (!date || !cityName) return;
@@ -49,7 +52,8 @@ function Form() {
 			position: { lat, lng },
 		};
 
-		createCity(newCity);
+		await createCity(newCity);
+		navigate("/app/cities");
 	}
 
 	useEffect(
