@@ -13,7 +13,13 @@ function CityItem({ city }) {
 			weekday: "long",
 		}).format(new Date(date));
 
-	const { currentCity } = useCities();
+	const { currentCity, deleteCity } = useCities();
+
+	function handleClick(e) {
+		// delete button sits on cityItem link which on click will open the city item. We need to prevent that action.
+		e.preventDefault();
+		deleteCity(id);
+	}
 
 	return (
 		<li>
@@ -24,7 +30,9 @@ function CityItem({ city }) {
 				<span className={styles.emoji}>{emoji}</span>
 				<h3 className={styles.name}>{cityName} </h3>
 				<time className={styles.date}>{formatDate(date)} </time>
-				<button className={styles.deleteBtn}>&times; </button>
+				<button className={styles.deleteBtn} onClick={handleClick}>
+					&times;{" "}
+				</button>
 			</Link>
 		</li>
 	);

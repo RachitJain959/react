@@ -47,18 +47,6 @@
         "lng": "2.3539713018742385"
       },
       "id": "xJpn8TBQBSs"
-    },
-    {
-      "cityName": "Barcelona",
-      "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2026-03-27T13:08:31.263Z",
-      "notes": "TEST",
-      "position": {
-        "lat": "41.37006646622932",
-        "lng": "2.188329484018934"
-      },
-      "id": "OhAoYhCeaK4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
