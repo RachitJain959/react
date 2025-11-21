@@ -25,6 +25,7 @@ function reducer(state, action) {
 				...state,
 				isLoading: false,
 				cities: [...state.cities, action.payload],
+				currentCity: action.payload,
 			};
 
 		case "city/deleted":
@@ -34,6 +35,7 @@ function reducer(state, action) {
 				cities: state.cities.filter(
 					(city) => city.id !== action.payload,
 				),
+				currentCity: {},
 			};
 
 		case "rejected":
@@ -72,6 +74,10 @@ function CitiesProvider({ children }) {
 	}, []);
 
 	async function getCity(id) {
+		// if we open a city that is current city, then no need to fetch again, saves time.
+		// Number(id)= id is being loaded from the URL, so its a string. But currentCity.id is a Number.
+		if (Number(id) === currentCity.id) return;
+
 		dispatch({ type: "loading" });
 
 		try {
