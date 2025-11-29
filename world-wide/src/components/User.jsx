@@ -16,7 +16,7 @@ function User() {
 
 	function handleClick() {
 		logout();
-		navigate("/login");
+		navigate("/");
 	}
 
 	return (
