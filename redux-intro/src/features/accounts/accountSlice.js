@@ -30,8 +30,20 @@ export default function accountReducer(state = initialStateAccount, action) {
 	}
 }
 
-export function deposit(amount) {
-	return { type: "account/deposit", payload: amount };
+export function deposit(amount, currency) {
+	// this will return an object which tells redux to dispatch immediately
+	if (currency === "USD") return { type: "account/deposit", payload: amount };
+
+	// if a function is returned to dispatch, redux knows it has a side effect(api call) so this will be redirected to middleware. Dispatch is not executed immediately
+	return async function (dispatch, getState) {
+		const res = await fetch(
+			`https://api.frankfurter.dev/v1/latest?amount=${amount}&from=${currency}&to=USD`,
+		);
+
+		const data = await res.json();
+		const converted = data.rates.USD;
+		dispatch({ type: "account/deposit", payload: converted });
+	};
 }
 
 export function withdraw(amount) {
