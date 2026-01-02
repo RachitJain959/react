@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deposit, payLoan, requestLoan, withdraw } from "./accountSlice";
 
 function AccountOperations() {
-	const [depositAmount, setDepositAmount] = useState(100);
+	const [depositAmount, setDepositAmount] = useState("");
 	const [withdrawalAmount, setWithdrawalAmount] = useState("");
 	const [loanAmount, setLoanAmount] = useState("");
 	const [loanPurpose, setLoanPurpose] = useState("");
