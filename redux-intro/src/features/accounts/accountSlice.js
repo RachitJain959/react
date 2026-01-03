@@ -1,3 +1,5 @@
+import { createSlice } from "@reduxjs/toolkit";
+
 const initialStateAccount = {
 	balance: 0,
 	loan: 0,
