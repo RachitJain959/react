@@ -11,6 +11,7 @@ function BalanceDisplay({ balance }) {
 	return <div className="balance">{formatCurrency(balance)}</div>;
 }
 
+// legacy code
 function mapStateToProps(state) {
 	return {
 		balance: state.account.balance,
