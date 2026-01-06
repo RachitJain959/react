@@ -7,7 +7,7 @@ function AccountOperations() {
 	const [withdrawalAmount, setWithdrawalAmount] = useState("");
 	const [loanAmount, setLoanAmount] = useState("");
 	const [loanPurpose, setLoanPurpose] = useState("");
-	const [currency, setCurrency] = useState("EUR");
+	const [currency, setCurrency] = useState("USD");
 
 	const dispatch = useDispatch();
 
@@ -17,11 +17,12 @@ function AccountOperations() {
 		balance,
 	} = useSelector((store) => store.account);
 
-	console.log(balance);
+	// console.log(balance);
 
 	function handleDeposit() {
 		if (!depositAmount) return;
-		dispatch(deposit(depositAmount, currency));
+		// dispatch(deposit(depositAmount, currency));
+		dispatch(deposit(depositAmount));
 		setDepositAmount("");
 		setCurrency("USD");
 	}

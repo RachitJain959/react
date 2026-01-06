@@ -11,11 +11,11 @@ const accountSlice = createSlice({
 	initialState,
 	reducers: {
 		deposit(state, action) {
-			state.balance = state.blance + action.payload;
+			state.balance = state.balance + action.payload;
 		},
 
 		withdraw(state, action) {
-			state.balance = state.blance - action.payload;
+			state.balance = state.balance - action.payload;
 		},
 
 		requestLoan(state, action) {
@@ -32,6 +32,10 @@ const accountSlice = createSlice({
 		},
 	},
 });
+
+export const { deposit, withdraw, requestLoan, payLoan } = accountSlice.actions;
+
+export default accountSlice.reducer;
 
 console.log(accountSlice);
 
