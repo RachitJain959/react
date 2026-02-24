@@ -1,3 +1,4 @@
+import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
 
 function MenuItem({ pizza }) {
@@ -10,17 +11,19 @@ function MenuItem({ pizza }) {
         alt={name}
         className={`h-24 ${soldOut ? "opacity-70 grayscale" : ""}`}
       />
-      <div className="flex flex-col">
+      <div className="flex grow flex-col">
         <p className="font-medium">{name}</p>
         <p className="text-sm capitalize italic text-stone-500">
           {ingredients.join(", ")}
         </p>
-        <div className="mt-auto text-sm">
+        <div className="mt-auto flex items-center justify-between text-sm">
           {!soldOut ? (
             <p>{formatCurrency(unitPrice)}</p>
           ) : (
             <p className="font-medium uppercase text-stone-500">Sold out</p>
           )}
+
+          <Button type="small">Add to cart</Button>
         </div>
       </div>
     </li>
